@@ -9,7 +9,7 @@ namespace AcemiEngine
     internal class Program
     {
         static string Usage = @"Usage: 
-autocemi [--config <path>] [--add <type: iwad | sourceport | mod> <name> <path>] [--nogreeting] [--config-wizard] [--stats]
+autocemi [--config <path>] [--add <type: iwad | sourceport | mod> <name> <path>] [--nogreeting] [--stats]
         ";
         static string Greeting = $"AutoCEMI Engine v. {Assembly.GetExecutingAssembly().GetName().Version} .NET {System.Environment.Version}";
         static DataService dataService = new DataService();
