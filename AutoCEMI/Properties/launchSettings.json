@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AutoCEMI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "AutoCEMI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
