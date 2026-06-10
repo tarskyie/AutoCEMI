@@ -1,7 +1,7 @@
-﻿using AcemiEngine.Models;
+﻿using AutoCEMI.Models;
 using System.Diagnostics;
 
-namespace AcemiEngine.Services
+namespace AutoCEMI.Services
 {
     internal class GameExecute
     {

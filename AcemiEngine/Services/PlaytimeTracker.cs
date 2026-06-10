@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace AcemiEngine.Services
+namespace AutoCEMI.Services
 {
     internal class PlaytimeTracker
     {

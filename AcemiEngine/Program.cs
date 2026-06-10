@@ -1,10 +1,10 @@
-﻿using AcemiEngine.Models;
-using AcemiEngine.Services;
+﻿using AutoCEMI.Models;
+using AutoCEMI.Services;
 using System.CommandLine;
 using System.Reflection;
 using System.Text.Json;
 
-namespace AcemiEngine
+namespace AutoCEMI
 {
     internal class Program
     {

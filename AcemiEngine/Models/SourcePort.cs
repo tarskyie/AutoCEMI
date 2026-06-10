@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AcemiEngine.Models
+namespace AutoCEMI.Models
 {
     internal class SourcePort
     {

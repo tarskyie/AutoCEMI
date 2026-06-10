@@ -1,8 +1,8 @@
-﻿using AcemiEngine.Models;
+﻿using AutoCEMI.Models;
 using Microsoft.Data.Sqlite;
 using System.Text.Json;
 
-namespace AcemiEngine.Services
+namespace AutoCEMI.Services
 {
     internal class DataService
     {
