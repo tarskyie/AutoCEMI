@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace AutoCEMI.Models
 {
-    internal class UserProfile
+    public class UserProfile
     {
         [JsonPropertyName("playtime")]
         public TimeSpan PlayTime { get; set; } = TimeSpan.Zero;

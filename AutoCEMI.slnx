@@ -5,4 +5,5 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="AcemiEngine/AutoCEMI.csproj" />
+  <Project Path="AutoCEMI.CLI/AutoCEMI.CLI.csproj" Id="3560feed-8d29-4db8-94bf-65711da32297" />
 </Solution>

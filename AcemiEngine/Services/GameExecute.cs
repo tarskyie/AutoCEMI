@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace AutoCEMI.Services
 {
-    internal class GameExecute
+    public class GameExecute
     {
         private DataService dataService = new();
         public async Task RunAsync(GameProfile gameProfile)

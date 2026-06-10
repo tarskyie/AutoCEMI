@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AutoCEMI.Models
 {
-    internal class Iwad
+    public class Iwad
     {
         public string Name { get; set; } = string.Empty;
         public string Path { get; set; } = string.Empty;

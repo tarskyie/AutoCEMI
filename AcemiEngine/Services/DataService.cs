@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace AutoCEMI.Services
 {
-    internal class DataService
+    public class DataService
     {
         public string persistentDataDirectoryPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\AutoCEMI";
         private string databaseFileName = "data.db";

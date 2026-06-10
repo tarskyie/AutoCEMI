@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AutoCEMI.Services
 {
-    internal class PlaytimeTracker
+    public class PlaytimeTracker
     {
         private Process? gameProcess;
         private TimeSpan accumulatedTime = TimeSpan.Zero;

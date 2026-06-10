@@ -4,11 +4,11 @@ using System.CommandLine;
 using System.Reflection;
 using System.Text.Json;
 
-namespace AutoCEMI
+namespace AutoCEMI.CLI
 {
     internal class Program
     {
-        static string Greeting = $"AutoCEMI Engine v. {Assembly.GetExecutingAssembly().GetName().Version} [.NET {System.Environment.Version}]";
+        static string Greeting = $"AutoCEMI v. {Assembly.GetExecutingAssembly().GetName().Version} [.NET {System.Environment.Version}]";
         static DataService dataService = new DataService();
 
         static async Task<int> Main(string[] args)
@@ -85,7 +85,7 @@ namespace AutoCEMI
 
             // --- Subcommand: remove ---
             var removeCommand = new Command("remove", "Remove an IWAD, source port, or mod");
-            
+
             var removeTypeArg = new Argument<string>("type");
             removeTypeArg.CompletionSources.Add("iwad", "sourceport", "mod");
             var removeNameArg = new Argument<string>("name");
@@ -153,7 +153,7 @@ namespace AutoCEMI
             {
                 var force = parseResult.GetValue(forceOption);
                 if (force)
-                    { dataService.ClearAllData(); return 0; }
+                { dataService.ClearAllData(); return 0; }
                 Console.Write("Are you sure you want to reset app data? (y/n): ");
                 if (Console.ReadLine()?.Trim().ToLower() == "y")
                     dataService.ClearAllData();
@@ -166,7 +166,7 @@ namespace AutoCEMI
             {
                 var force = parseResult.GetValue(forceOption);
                 if (force)
-                    { dataService.ClearData(); return 0; }
+                { dataService.ClearData(); return 0; }
                 Console.WriteLine("Warning: this will only reset the database, but not the configuration file. " +
                     "If you want to reset the configuration file as well, use \"reset-all\".");
                 Console.Write("Are you sure you want to reset the database? (y/n): ");
@@ -201,7 +201,7 @@ namespace AutoCEMI
                     Console.WriteLine(Greeting);
 
                 if (stats)
-                {  
+                {
                     dataService.DisplayStats();
                     return 0;
                 }
