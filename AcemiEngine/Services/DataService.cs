@@ -6,7 +6,7 @@ namespace AcemiEngine.Services
 {
     internal class DataService
     {
-        public string persistentDataDirectoryPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Roaming\\AutoCEMI";
+        public string persistentDataDirectoryPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\AutoCEMI";
         private string databaseFileName = "data.db";
         private string profileFileName = "profile.json";
         private string connectionString => $"Data Source={persistentDataDirectoryPath}\\{databaseFileName}";
@@ -122,22 +122,98 @@ namespace AcemiEngine.Services
                 }
             }
         }
+        public void ClearData()
+        {
+            ports.Clear();
+            iwads.Clear();
+            mods.Clear();
+
+            SaveData();
+        }
+
+        public void ClearAllData()
+        {
+            ClearData();
+            CreateProfile();
+        }
+
+        public void ResetPlaytime()
+        {
+            UpdatePlayertime(null);
+        }
 
         public List<SourcePort> ports = new();
         public List<Iwad> iwads = new();
         public List<Mod> mods = new();
 
-        public void AddPort(SourcePort port) { ports.Add(port); SaveData(); }
-        public void AddIwad(Iwad iwad) { iwads.Add(iwad); SaveData(); }
-        public void AddMod(Mod mod) { mods.Add(mod); SaveData(); }
-        public void RemovePort(SourcePort port) { ports.Remove(port); SaveData(); }
-        public void RemoveIwad(Iwad iwad) { iwads.Remove(iwad); SaveData(); }
-        public void RemoveMod(Mod mod) { mods.Remove(mod); SaveData(); }
+        public void AddPort(SourcePort port) {
+            var idx = ports.FindIndex(m => m.Name == port.Name);
+            if (idx >= 0)
+            {
+                ports[idx] = port;
+                return;
+            }
+            ports.Add(port);
+            SaveData();
+        }
+        public void AddIwad(Iwad iwad) { 
+            var idx = iwads.FindIndex(m => m.Name == iwad.Name);
+            if (idx >= 0)
+            {
+                iwads[idx] = iwad;
+                return;
+            }
+            iwads.Add(iwad); 
+            SaveData();
+        }
+        public void AddMod(Mod mod) { 
+            var idx = mods.FindIndex(m => m.Name == mod.Name);
+            if (idx >= 0)
+            {
+                mods[idx] = mod;
+                return;
+            }
+            mods.Add(mod);
+            SaveData();
+        }
+        public void RemovePort(string portName) { 
+            var port = ports.FirstOrDefault(m => m.Name == portName);
+            if (port == null)
+                return;
+            ports.Remove(port); 
+            SaveData(); 
+        }
+        public void RemoveIwad(string iwadName) { 
+            var iwad = iwads.FirstOrDefault(m => m.Name == iwadName);
+            if (iwad == null) return;
+            iwads.Remove(iwad);
+            SaveData();
+        }
+        public void RemoveMod(string modName) { 
+            var mod = mods.FirstOrDefault(m => m.Name == modName);
+            if (mod == null) return;
+            mods.Remove(mod); 
+            SaveData();
+        }
 
-        public void UpdatePlayertime(TimeSpan delta)
+        public void UpdatePlayertime(TimeSpan? delta)
+        {
+            var profilePath = Path.Combine(persistentDataDirectoryPath, profileFileName);
+            var profile = JsonSerializer.Deserialize<UserProfile>(File.ReadAllText(profilePath))
+                          ?? new UserProfile();
+            if (delta.HasValue){
+                profile.PlayTime += delta.Value;
+            }
+            else
+            {
+                profile.PlayTime = TimeSpan.Zero;
+            }
+            File.WriteAllText(profilePath, JsonSerializer.Serialize(profile));
+        }
+        public void DisplayStats()
         {
             UserProfile? profile = JsonSerializer.Deserialize<UserProfile>(File.ReadAllText($"{persistentDataDirectoryPath}//{profileFileName}"));
-            profile?.PlayTime += delta;
+            Console.WriteLine($"Total playtime: {profile?.PlayTime}");
         }
     }
 }

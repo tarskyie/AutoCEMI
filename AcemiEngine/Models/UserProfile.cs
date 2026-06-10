@@ -8,6 +8,6 @@ namespace AcemiEngine.Models
     internal class UserProfile
     {
         [JsonPropertyName("playtime")]
-        public TimeSpan PlayTime = new();
+        public TimeSpan PlayTime { get; set; } = TimeSpan.Zero;
     }
 }

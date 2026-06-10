@@ -6,7 +6,7 @@ namespace AcemiEngine.Services
 {
     internal class PlaytimeTracker
     {
-        private Process gameProcess;
+        private Process? gameProcess;
         private TimeSpan accumulatedTime = TimeSpan.Zero;
         private DateTime? sessionStart = null;
 

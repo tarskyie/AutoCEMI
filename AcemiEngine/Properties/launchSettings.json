@@ -1,8 +1,7 @@
 {
   "profiles": {
     "AcemiEngine": {
-      "commandName": "Project",
-      "commandLineArgs": "--config \"C:\\Users\\tafun\\OneDrive\\Desktop\\acemi\\MyProfile.json\""
+      "commandName": "Project"
     }
   }
 }
