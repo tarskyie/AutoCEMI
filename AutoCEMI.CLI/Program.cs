@@ -61,6 +61,12 @@ namespace AutoCEMI.CLI
                 var name = parseResult.GetValue(addNameArg);
                 var path = parseResult.GetValue(addPathArg);
 
+                if (name  == null || path == null)
+                {
+                    Console.WriteLine("Error: name and path arguments are required.");
+                    return 0;
+                }
+
                 switch (type)
                 {
                     case "iwad":
@@ -97,6 +103,11 @@ namespace AutoCEMI.CLI
             {
                 var type = parseResult.GetValue(removeTypeArg);
                 var name = parseResult.GetValue(removeNameArg);
+                if (name == null)
+                {
+                    Console.WriteLine("Error: name argument is required.");
+                    return 0;
+                }
                 switch (type)
                 {
                     case "iwad":
