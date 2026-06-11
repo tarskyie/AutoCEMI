@@ -9,7 +9,8 @@ namespace AutoCEMI.GUI.ViewModels
 {
     public partial class TabItemViewModel : ObservableObject
     {
-        public string Header { get; }
+        [ObservableProperty]
+        private string header;
 
         public TabItemViewModel(string header)
         {

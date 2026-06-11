@@ -10,14 +10,16 @@
     mc:Ignorable="d">
 
     <Grid>
-        <TabView Margin="0,10,0,0"
+        <TabView Margin="0,6,0,0"
                  TabItemsSource="{x:Bind ViewModel.Tabs}"
                  SelectedItem="{x:Bind ViewModel.SelectedTab, Mode=TwoWay}"
                  TabCloseRequested="TabView_TabCloseRequested"
                  AddTabButtonClick="TabView_AddTabButtonClick">
             <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="vm:TabItemViewModel">
-                    <TabViewItem Header="{x:Bind Header}" />
+                    <TabViewItem Header="{x:Bind Header, Mode=OneWay}">
+                        <local:GameProfilePage DataContext="{x:Bind}" />
+                    </TabViewItem>
                 </DataTemplate>
             </TabView.TabItemTemplate>
         </TabView>

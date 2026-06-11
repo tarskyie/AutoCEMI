@@ -16,6 +16,7 @@
 	  <OutputType>WinExe</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\GameProfilePage.xaml" />
     <None Remove="Views\MainPage.xaml" />
   </ItemGroup>
 
@@ -48,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\GameProfilePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MainPage.xaml">
