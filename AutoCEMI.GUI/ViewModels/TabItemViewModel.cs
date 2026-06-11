@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoCEMI.Models;
 
 namespace AutoCEMI.GUI.ViewModels
 {
@@ -11,6 +12,9 @@ namespace AutoCEMI.GUI.ViewModels
     {
         [ObservableProperty]
         private string header;
+
+        [ObservableProperty]
+        private GameProfile profile = new();
 
         public TabItemViewModel(string header)
         {

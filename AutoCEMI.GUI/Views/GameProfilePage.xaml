@@ -8,7 +8,93 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <TextBox Text="{Binding Header, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-    </Grid>
+    <ScrollViewer>
+        <StackPanel Padding="16" Spacing="24">
+
+            <!-- Profile Metadata -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Profile" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBox Header="Name"
+                         Text="{Binding Profile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Header="Description"
+                         Text="{Binding Profile.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         AcceptsReturn="True" />
+            </StackPanel>
+
+            <!-- Game Settings -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Game" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBox Header="IWAD"
+                         Text="{Binding Profile.Game.Iwad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Header="Source Port"
+                         Text="{Binding Profile.Game.SourcePort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <!-- CustomArguments: rendered as an editable list in code-behind or via ItemsControl -->
+            </StackPanel>
+
+            <!-- Mods Settings -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Mods"
+               Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                <Button Content="Add Mod"
+            Click="AddModButton_Click" />
+
+                <ItemsControl x:Name="LoadOrder_ItemsControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Text="{Binding}" />
+
+                                <Button Grid.Column="1"
+                                        Content="Remove"
+                                        Tag="{Binding}"
+                                        Click="RemoveModButton_Click"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Video Settings -->
+            <StackPanel Spacing="8" Visibility="Collapsed">
+                <TextBlock Text="Video" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBox Header="Renderer"
+                         Text="{Binding Profile.PortSettings.Video.Renderer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <ToggleSwitch Header="VSync"
+                              IsOn="{Binding Profile.PortSettings.Video.VSync, Mode=TwoWay}" />
+                <NumberBox Header="FPS Cap"
+                           Value="{Binding Profile.PortSettings.Video.FpsCap, Mode=TwoWay}"
+                           SpinButtonPlacementMode="Inline"
+                           Minimum="0" />
+                <TextBox Header="Resolution"
+                         Text="{Binding Profile.PortSettings.Video.Resolution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!-- Audio Settings -->
+            <StackPanel Spacing="8" Visibility="Collapsed">
+                <TextBlock Text="Audio" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <NumberBox Header="Sample Rate"
+                           Value="{Binding Profile.PortSettings.Audio.SampleRate, Mode=TwoWay}"
+                           SpinButtonPlacementMode="Inline"
+                           Minimum="0" />
+                <TextBox Header="Backend"
+                         Text="{Binding Profile.PortSettings.Audio.Backend, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!-- Gameplay Flags -->
+            <StackPanel Spacing="8" Visibility="Collapsed">
+                <TextBlock Text="Gameplay Flags" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <ItemsControl x:Name="GameplayFlagsList"
+                              ItemsSource="{Binding Profile.PortSettings.GameplayFlags}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ToggleSwitch Header="{Binding Key}"
+                                          IsOn="{Binding Value, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
 </Page>

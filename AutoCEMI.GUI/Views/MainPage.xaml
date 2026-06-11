@@ -17,7 +17,7 @@
                  AddTabButtonClick="TabView_AddTabButtonClick">
             <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="vm:TabItemViewModel">
-                    <TabViewItem Header="{x:Bind Header, Mode=OneWay}">
+                    <TabViewItem Header="{Binding Profile.Name, Mode=OneWay}">
                         <local:GameProfilePage DataContext="{x:Bind}" />
                     </TabViewItem>
                 </DataTemplate>

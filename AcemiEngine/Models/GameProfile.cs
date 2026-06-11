@@ -1,18 +1,35 @@
-﻿using System.Text.Json.Serialization;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace AutoCEMI.Models
 {
-    public class GameProfile
+    public class GameProfile : INotifyPropertyChanged
     {
         [JsonPropertyName("profile_version")]
         public string ProfileVersion { get; set; } = string.Empty;
 
         [JsonPropertyName("profile_id")]
-        public string ProfileId { get; set; } = string.Empty;
+        public Guid ProfileId { get; set; } = Guid.NewGuid();
+
+        private string _name = "New Profile";
 
         [JsonPropertyName("name")]
-        public string Name { get; set; } = string.Empty;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    PropertyChanged?.Invoke(this,
+                        new PropertyChangedEventArgs(nameof(Name)));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         [JsonPropertyName("description")]
         public string Description { get; set; } = string.Empty;
