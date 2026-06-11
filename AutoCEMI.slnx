@@ -6,4 +6,9 @@
   </Configurations>
   <Project Path="AcemiEngine/AutoCEMI.csproj" />
   <Project Path="AutoCEMI.CLI/AutoCEMI.CLI.csproj" Id="3560feed-8d29-4db8-94bf-65711da32297" />
+  <Project Path="AutoCEMI.GUI/AutoCEMI.GUI.csproj" Id="75444786-3adc-4869-bdf9-75ea76ee9021">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
 </Solution>
