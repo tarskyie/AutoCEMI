@@ -7,7 +7,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:AutoCEMI.GUI.ViewModels"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+
+    <Page.Resources>
+        <MenuFlyout x:Key="ProfileFlyout">
+            <MenuFlyoutItem Text="Data"
+                            Click="ProfileFlyoutData_Click"/>
+            <MenuFlyoutItem Text="Option 2" />
+        </MenuFlyout>
+    </Page.Resources>
 
     <Grid>
         <TabView Margin="0,6,0,0"
@@ -15,6 +25,15 @@
                  SelectedItem="{x:Bind ViewModel.SelectedTab, Mode=TwoWay}"
                  TabCloseRequested="TabView_TabCloseRequested"
                  AddTabButtonClick="TabView_AddTabButtonClick">
+            <TabView.TabStripFooter>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ProfileMenuButton"
+                        Content="▼"
+                        Flyout="{StaticResource ProfileFlyout}" />
+                    <Grid Width="160" />
+                </StackPanel>
+            </TabView.TabStripFooter>
+            
             <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="vm:GameProfileViewModel">
                     <TabViewItem Header="{Binding Profile.Name, Mode=OneWay}">
@@ -23,5 +42,6 @@
                 </DataTemplate>
             </TabView.TabItemTemplate>
         </TabView>
+        
     </Grid>
 </Page>

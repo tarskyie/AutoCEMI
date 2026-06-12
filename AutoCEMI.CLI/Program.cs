@@ -144,7 +144,7 @@ namespace AutoCEMI.CLI
                             Console.WriteLine($"- {iwad.Name}: {iwad.Path}");
                         break;
                     case "sourceport":
-                        foreach (var port in dataService.ports)
+                        foreach (var port in dataService.sourcePorts)
                             Console.WriteLine($"- {port.Name}: {port.Path}");
                         break;
                     case "mod":

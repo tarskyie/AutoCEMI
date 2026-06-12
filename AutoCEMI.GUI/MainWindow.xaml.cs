@@ -1,3 +1,4 @@
+using AutoCEMI.GUI.ViewModels;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -26,8 +27,17 @@ namespace AutoCEMI.GUI
             {
                 AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
             }
-
             MainPage_Frame.Navigate(typeof(Views.MainPage));
+        }
+
+        public void Navigate(Type type)
+        {
+            MainPage_Frame.Navigate(type);
+        }
+
+        public void GoBack()
+        {
+            MainPage_Frame.GoBack();
         }
     }
 }

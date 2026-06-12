@@ -24,7 +24,7 @@ namespace AutoCEMI.Services
             }
             
             // look up source port and iwad path from data service
-            var sourcePort = dataService.ports.FirstOrDefault(p => p.Name == gameProfile.Game.SourcePort);
+            var sourcePort = dataService.sourcePorts.FirstOrDefault(p => p.Name == gameProfile.Game.SourcePort);
             if (sourcePort != null)
             {
                 sourcePortPath = sourcePort.Path;

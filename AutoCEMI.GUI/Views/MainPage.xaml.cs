@@ -10,7 +10,7 @@ namespace AutoCEMI.GUI.Views
         public MainPage()
         {
             InitializeComponent();
-            DataContext = new ViewModels.MainViewModel();
+            DataContext = ViewModel;
         }
 
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
@@ -21,6 +21,11 @@ namespace AutoCEMI.GUI.Views
         private void TabView_AddTabButtonClick(TabView sender, object args)
         {
             ViewModel.AddTabCommand.Execute(null);
+        }
+
+        private void ProfileFlyoutData_Click(object sender, RoutedEventArgs e)
+        {
+            App.MainWindowInstance.Navigate(typeof(DataPage));
         }
     }
 }

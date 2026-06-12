@@ -1,5 +1,6 @@
 ﻿using AutoCEMI.Models;
 using Microsoft.Data.Sqlite;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 
 namespace AutoCEMI.Services
@@ -72,7 +73,7 @@ namespace AutoCEMI.Services
                 {
                     while (reader.Read())
                     {
-                        ports.Add(new SourcePort(name: reader.GetString(0), path: reader.GetString(1)));
+                        sourcePorts.Add(new SourcePort(name: reader.GetString(0), path: reader.GetString(1)));
                     }
                 }
                 command.CommandText = "SELECT Name, Path FROM Iwads";
@@ -101,7 +102,7 @@ namespace AutoCEMI.Services
                 var command = connection.CreateCommand();
                 command.CommandText = "DELETE FROM SourcePorts";
                 command.ExecuteNonQuery();
-                foreach (var port in ports)
+                foreach (var port in sourcePorts)
                 {
                     command.CommandText = $"INSERT INTO SourcePorts (Name, Path) VALUES ('{port.Name}', '{port.Path}')";
                     command.ExecuteNonQuery();
@@ -124,7 +125,7 @@ namespace AutoCEMI.Services
         }
         public void ClearData()
         {
-            ports.Clear();
+            sourcePorts.Clear();
             iwads.Clear();
             mods.Clear();
 
@@ -142,22 +143,46 @@ namespace AutoCEMI.Services
             UpdatePlayertime(null);
         }
 
-        public List<SourcePort> ports = new();
-        public List<Iwad> iwads = new();
-        public List<Mod> mods = new();
+        public ObservableCollection<SourcePort> sourcePorts { get; set; } = new ObservableCollection<SourcePort>();
+        public ObservableCollection<Iwad> iwads { get; set; } = new ObservableCollection<Iwad>();
+        public ObservableCollection<Mod> mods { get; set; } = new ObservableCollection<Mod>();
+        public List<SourcePort> portsList
+        {
+            get => new List<SourcePort>(sourcePorts);
+            set
+            {
+                portsList = value;
+            }
+        }
+        public List<Iwad> iwadsList
+        {
+            get => new List<Iwad>(iwads);
+            set
+            {
+                iwadsList = value;
+            }
+        }
+        public List<Mod> modsList
+        {
+            get => new List<Mod>(modsList);
+            set
+            {
+                modsList = value;
+            }
+        }
 
         public void AddPort(SourcePort port) {
-            var idx = ports.FindIndex(m => m.Name == port.Name);
+            var idx = portsList.FindIndex(m => m.Name == port.Name);
             if (idx >= 0)
             {
-                ports[idx] = port;
+                sourcePorts[idx] = port;
                 return;
             }
-            ports.Add(port);
+            sourcePorts.Add(port);
             SaveData();
         }
         public void AddIwad(Iwad iwad) { 
-            var idx = iwads.FindIndex(m => m.Name == iwad.Name);
+            var idx = iwadsList.FindIndex(m => m.Name == iwad.Name);
             if (idx >= 0)
             {
                 iwads[idx] = iwad;
@@ -167,7 +192,7 @@ namespace AutoCEMI.Services
             SaveData();
         }
         public void AddMod(Mod mod) { 
-            var idx = mods.FindIndex(m => m.Name == mod.Name);
+            var idx = modsList.FindIndex(m => m.Name == mod.Name);
             if (idx >= 0)
             {
                 mods[idx] = mod;
@@ -177,10 +202,10 @@ namespace AutoCEMI.Services
             SaveData();
         }
         public void RemovePort(string portName) { 
-            var port = ports.FirstOrDefault(m => m.Name == portName);
+            var port = sourcePorts.FirstOrDefault(m => m.Name == portName);
             if (port == null)
                 return;
-            ports.Remove(port); 
+            sourcePorts.Remove(port); 
             SaveData(); 
         }
         public void RemoveIwad(string iwadName) { 
@@ -215,5 +240,13 @@ namespace AutoCEMI.Services
             UserProfile? profile = JsonSerializer.Deserialize<UserProfile>(File.ReadAllText($"{persistentDataDirectoryPath}//{profileFileName}"));
             Console.WriteLine($"Total playtime: {profile?.PlayTime}");
         }
+
+        public UserProfile GetProfile()
+        {
+            var profilePath = Path.Combine(persistentDataDirectoryPath, profileFileName);
+            return JsonSerializer.Deserialize<UserProfile>(File.ReadAllText(profilePath))
+                   ?? new UserProfile();
+        }
+
     }
 }

@@ -16,6 +16,7 @@
 	  <OutputType>WinExe</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\DataPage.xaml" />
     <None Remove="Views\GameProfilePage.xaml" />
     <None Remove="Views\MainPage.xaml" />
   </ItemGroup>
@@ -44,14 +45,21 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.1839" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AcemiEngine\AutoCEMI.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\GameProfilePage.xaml">

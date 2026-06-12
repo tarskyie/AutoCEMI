@@ -17,7 +17,7 @@ using Windows.Foundation.Collections;
 
 namespace AutoCEMI.GUI.Views
 {
-    public sealed partial class GameProfilePage : Page
+    public sealed partial class GameProfilePage : UserControl
     {
         public GameProfileViewModel ViewModel { get; } = new();
         
