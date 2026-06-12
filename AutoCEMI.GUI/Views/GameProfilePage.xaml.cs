@@ -19,31 +19,11 @@ namespace AutoCEMI.GUI.Views
 {
     public sealed partial class GameProfilePage : Page
     {
-        ObservableCollection<string> loadOrder = new ObservableCollection<string>();
+        public GameProfileViewModel ViewModel { get; } = new();
+        
         public GameProfilePage()
         {
             InitializeComponent();
-            LoadOrderUpdate();
-        }
-
-        private void LoadOrderUpdate()
-        {
-            loadOrder = DataContext is TabItemViewModel vm
-                ? new ObservableCollection<string>(vm.Profile.Mods.LoadOrder)
-                : new ObservableCollection<string>();
-
-            LoadOrder_ItemsControl.ItemsSource = loadOrder;
-        }
-
-        private void AddMod(string name)
-        {
-            if (DataContext is ViewModels.TabItemViewModel vm) vm.Profile.Mods.LoadOrder.Add(name);
-            LoadOrderUpdate();
-        }
-        private void RemoveMod(string name)
-        {
-            if (DataContext is ViewModels.TabItemViewModel vm) vm.Profile.Mods.LoadOrder.Remove(name);
-            LoadOrderUpdate();
         }
 
         private async void AddModButton_Click(object sender, RoutedEventArgs e)
@@ -70,15 +50,12 @@ namespace AutoCEMI.GUI.Views
 
                 if (!string.IsNullOrWhiteSpace(modName))
                 {
-                    AddMod(modName);
+                    if (DataContext is GameProfileViewModel vm)
+                    {
+                        vm.AddModCommand.Execute(modName);
+                    }
                 }
             }
-        }
-
-        private void RemoveModButton_Click(object sender, RoutedEventArgs e)
-        {
-            string modName = (string)((Button)sender).Tag;
-            RemoveMod(modName);
         }
     }
 }

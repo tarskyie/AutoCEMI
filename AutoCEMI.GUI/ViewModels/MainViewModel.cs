@@ -12,20 +12,20 @@ namespace AutoCEMI.GUI.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<TabItemViewModel> tabs = new();
+        private ObservableCollection<GameProfileViewModel> tabs = new();
 
         [ObservableProperty]
-        private TabItemViewModel? selectedTab;
+        private GameProfileViewModel? selectedTab;
 
         [RelayCommand]
         private void AddTab()
         {
-            Tabs.Add(new TabItemViewModel("New Tab"));
+            Tabs.Add(new GameProfileViewModel());
             SelectedTab = Tabs.Last();
         }
 
         [RelayCommand]
-        private void CloseTab(TabItemViewModel tab)
+        private void CloseTab(GameProfileViewModel tab)
         {
             Tabs.Remove(tab);
         }

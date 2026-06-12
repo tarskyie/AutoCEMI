@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
@@ -70,8 +71,18 @@ namespace AutoCEMI.Models
 
     public class ModsSettings
     {
+        [JsonIgnore]
+        public ObservableCollection<string> LoadOrder { get; set; } = new();
+
         [JsonPropertyName("load_order")]
-        public List<string> LoadOrder { get; set; }= new();
+        public List<string> LoadOrderSerializable
+        {
+            get => new List<string>(LoadOrder);
+            set
+            {
+                LoadOrder = new ObservableCollection<string>(value);
+            }
+        }
 
         [JsonPropertyName("auto_sort")]
         public bool AutoSort { get; set; }

@@ -1,24 +1,68 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoCEMI.Models;
+﻿using AutoCEMI.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AutoCEMI.GUI.ViewModels
 {
-    public partial class TabItemViewModel : ObservableObject
+    public partial class GameProfileViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string header;
-
         [ObservableProperty]
         private GameProfile profile = new();
 
-        public TabItemViewModel(string header)
+        [ObservableProperty]
+        private string? selectedMod;
+
+        public GameProfileViewModel()
         {
-            Header = header;
+            MoveModUpCommand = new RelayCommand(MoveModUp);
+            MoveModDownCommand = new RelayCommand(MoveModDown);
+        }
+
+        public IRelayCommand MoveModUpCommand { get; }
+        public IRelayCommand MoveModDownCommand { get; }
+
+        [RelayCommand]
+        private void AddMod(string modName = "New mod")
+        {
+            int idx = Profile.Mods.LoadOrder.IndexOf(modName);
+
+            if (idx >= 0)
+            {
+                return;
+            }
+
+            Profile.Mods.LoadOrder.Add(modName);
+        }
+
+        [RelayCommand]
+        private void RemoveMod(string modName)
+        {
+            Profile.Mods.LoadOrder.Remove(modName);
+        }
+
+        private void MoveModUp()
+        {
+            int idx = Profile.Mods.LoadOrder.IndexOf(SelectedMod ?? string.Empty);
+            if (idx > 0)
+            {
+                MoveItem(idx, idx - 1);
+            }
+        }
+
+        private void MoveModDown()
+        {
+            int idx = Profile.Mods.LoadOrder.IndexOf(SelectedMod ?? string.Empty);
+            if (idx >= 0 && idx < Profile.Mods.LoadOrder.Count - 1)
+            {
+                MoveItem(idx, idx + 1);
+            }
+        }
+
+        private void MoveItem(int oldIndex, int newIndex)
+        {
+            var item = Profile.Mods.LoadOrder[oldIndex];
+            Profile.Mods.LoadOrder.RemoveAt(oldIndex);
+            Profile.Mods.LoadOrder.Insert(newIndex, item);
         }
     }
 }

@@ -16,7 +16,7 @@
                  TabCloseRequested="TabView_TabCloseRequested"
                  AddTabButtonClick="TabView_AddTabButtonClick">
             <TabView.TabItemTemplate>
-                <DataTemplate x:DataType="vm:TabItemViewModel">
+                <DataTemplate x:DataType="vm:GameProfileViewModel">
                     <TabViewItem Header="{Binding Profile.Name, Mode=OneWay}">
                         <local:GameProfilePage DataContext="{x:Bind}" />
                     </TabViewItem>

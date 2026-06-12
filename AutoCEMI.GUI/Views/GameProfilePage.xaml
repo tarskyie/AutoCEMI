@@ -4,9 +4,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:AutoCEMI.GUI.Views"
+    xmlns:vm="using:AutoCEMI.GUI.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:GameProfileViewModel />
+    </Page.DataContext>
 
     <ScrollViewer>
         <StackPanel Padding="16" Spacing="24">
@@ -36,11 +41,24 @@
                 <TextBlock Text="Mods"
                Style="{StaticResource SubtitleTextBlockStyle}" />
 
-                <Button Content="Add Mod"
-            Click="AddModButton_Click" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Add Mod"
+                        Click="AddModButton_Click" />
+                    <Button x:Name="MoveModUp_Button"
+                            Command="{Binding MoveModUpCommand}">
+                        <FontIcon Glyph="&#xE74A;" />
+                    </Button>
+                    <Button x:Name="MoveModDown_Button"
+                            Command="{Binding MoveModDownCommand}">
+                        <FontIcon Glyph="&#xE74B;" />
+                    </Button>
+                </StackPanel>
 
-                <ItemsControl x:Name="LoadOrder_ItemsControl">
-                    <ItemsControl.ItemTemplate>
+                <ListBox x:Name="LoadOrder_ListBox"
+                         Background="Transparent"
+                         ItemsSource="{Binding Profile.Mods.LoadOrder}"
+                         SelectedItem="{Binding SelectedMod, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="*,Auto">
                                 <TextBlock Text="{Binding}" />
@@ -48,11 +66,12 @@
                                 <Button Grid.Column="1"
                                         Content="Remove"
                                         Tag="{Binding}"
-                                        Click="RemoveModButton_Click"/>
+                                        Command="{Binding DataContext.RemoveModCommand, ElementName=LoadOrder_ListBox}"
+                    CommandParameter="{Binding}" />
                             </Grid>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
 
             <!-- Video Settings -->

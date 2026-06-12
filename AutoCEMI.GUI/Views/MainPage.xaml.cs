@@ -15,7 +15,7 @@ namespace AutoCEMI.GUI.Views
 
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
-            ViewModel.CloseTabCommand.Execute(args.Item as TabItemViewModel);
+            ViewModel.CloseTabCommand.Execute(args.Item as GameProfileViewModel);
         }
 
         private void TabView_AddTabButtonClick(TabView sender, object args)
