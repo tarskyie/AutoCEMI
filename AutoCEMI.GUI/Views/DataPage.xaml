@@ -7,7 +7,8 @@
     xmlns:m="using:AutoCEMI.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="RootPage">
 
     <Grid Padding="16">
         <Grid.RowDefinitions>
@@ -25,14 +26,36 @@
         <StackPanel Spacing="24" Grid.Row="1">
 
             <StackPanel>
+                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">User Profile</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="0,0,4,0">Time played:</TextBlock>
+                    <TextBlock Text="{Binding DataService.Profile.PlayTime}" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel>
                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">IWADs</TextBlock>
-                <ItemsControl ItemsSource="{Binding DataService.iwads, Mode=TwoWay}">
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="AddIwads_Button_Click" Content="Add" />
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{Binding DataService.iwads}"
+                              x:Name="Iwads_ItemsControl">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="m:Iwad">
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind Name}" />
-                                <TextBlock Text="{x:Bind Path}" />
-                            </StackPanel>
+                            <Grid ColumnDefinitions="*,Auto"
+                                Margin="0,4">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{x:Bind Name}" />
+                                    <TextBlock Text="{x:Bind Path}" />
+                                </StackPanel>
+                                <Button Grid.Column="1"
+                                        Command="{Binding DataContext.RemoveIwadCommand, ElementName=SourcePorts_ItemsControl}"
+                                        CommandParameter="{x:Bind}">
+                                    <FontIcon Glyph="&#xE894;" />
+                                </Button>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -40,13 +63,27 @@
 
             <StackPanel>
                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Source ports</TextBlock>
-                <ItemsControl ItemsSource="{Binding DataService.sourcePorts, Mode=TwoWay}">
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="AddSourcePorts_Button_Click" Content="Add" />
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{Binding DataService.sourcePorts}"
+                              x:Name="SourcePorts_ItemsControl">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="m:Iwad">
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind Name}" />
-                                <TextBlock Text="{x:Bind Path}" />
-                            </StackPanel>
+                        <DataTemplate x:DataType="m:SourcePort">
+                            <Grid ColumnDefinitions="*,Auto"
+                                  Margin="0,4">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{x:Bind Name}" />
+                                    <TextBlock Text="{x:Bind Path}" />
+                                </StackPanel>
+                                <Button Grid.Column="1"
+                                        Command="{Binding DataContext.RemovePortCommand, ElementName=SourcePorts_ItemsControl}" 
+                                        CommandParameter="{x:Bind}">
+                                    <FontIcon Glyph="&#xE894;" />
+                                </Button>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -54,13 +91,27 @@
 
             <StackPanel>
                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Mods</TextBlock>
-                <ItemsControl ItemsSource="{Binding DataService.mods, Mode=TwoWay}">
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="AddMods_Button_Click" Content="Add" />
+                </StackPanel>
+
+                <ItemsControl ItemsSource="{Binding DataService.mods}"
+                              x:Name="Mods_ItemsControl">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="m:Iwad">
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind Name}" />
-                                <TextBlock Text="{x:Bind Path}" />
-                            </StackPanel>
+                        <DataTemplate x:DataType="m:Mod">
+                            <Grid ColumnDefinitions="*,Auto"
+                                    Margin="0,4">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{x:Bind Name}" />
+                                    <TextBlock Text="{x:Bind Path}" />
+                                </StackPanel>
+                                <Button Grid.Column="1"
+                                        Command="{Binding DataContext.RemoveModCommand, ElementName=Mods_ItemsControl}"
+                                        CommandParameter="{x:Bind}">
+                                    <FontIcon Glyph="&#xE894;" />
+                                </Button>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

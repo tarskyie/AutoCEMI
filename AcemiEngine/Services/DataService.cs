@@ -164,7 +164,7 @@ namespace AutoCEMI.Services
         }
         public List<Mod> modsList
         {
-            get => new List<Mod>(modsList);
+            get => new List<Mod>(mods);
             set
             {
                 modsList = value;
@@ -247,6 +247,9 @@ namespace AutoCEMI.Services
             return JsonSerializer.Deserialize<UserProfile>(File.ReadAllText(profilePath))
                    ?? new UserProfile();
         }
-
+        public UserProfile Profile
+        {
+            get => GetProfile();
+        }
     }
 }
