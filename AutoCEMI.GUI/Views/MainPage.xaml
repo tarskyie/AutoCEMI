@@ -8,37 +8,54 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:AutoCEMI.GUI.ViewModels"
     NavigationCacheMode="Enabled"
-    mc:Ignorable="d">
-
-
-    <Page.Resources>
-        <MenuFlyout x:Key="ProfileFlyout">
-            <MenuFlyoutItem Text="Data"
-                            Click="ProfileFlyoutData_Click"/>
-            <MenuFlyoutItem Text="About"
-                            Click="ProfileFlyoutAbout_Click"/>
-        </MenuFlyout>
-    </Page.Resources>
+    mc:Ignorable="d"
+    x:Name="RootPage">
 
     <Grid>
         <TabView Margin="0,6,0,0"
                  TabItemsSource="{x:Bind ViewModel.Tabs}"
                  SelectedItem="{x:Bind ViewModel.SelectedTab, Mode=TwoWay}"
                  TabCloseRequested="TabView_TabCloseRequested"
-                 AddTabButtonClick="TabView_AddTabButtonClick">
+                 AddTabButtonClick="TabView_AddTabButtonClick"
+                 x:Name="Root_TabView">
             <TabView.TabStripFooter>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="ProfileMenuButton"
-                        Content="▼"
-                        Flyout="{StaticResource ProfileFlyout}" />
-                    <Grid Width="160" />
+                    <Grid Width="200" />
                 </StackPanel>
             </TabView.TabStripFooter>
             
             <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="vm:GameProfileViewModel">
                     <TabViewItem Header="{Binding Profile.Name, Mode=OneWay}">
-                        <local:GameProfilePage DataContext="{x:Bind}" />
+                        <StackPanel>
+                            <MenuBar>
+                                <MenuBarItem Title="File">
+                                    <MenuFlyoutItem Text="New"
+                                                    Click="New_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem Text="Open..."
+                                                    Click="Open_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem Text="Save"/>
+                                    <MenuFlyoutItem Text="Exit"/>
+                                </MenuBarItem>
+
+                                <MenuBarItem Title="Edit">
+                                    <MenuFlyoutItem Text="Undo"/>
+                                    <MenuFlyoutItem Text="Cut"/>
+                                    <MenuFlyoutItem Text="Copy"/>
+                                    <MenuFlyoutItem Text="Paste"/>
+                                </MenuBarItem>
+
+                                <MenuBarItem Title="Execution">
+                                    <MenuFlyoutItem Text="View and edit data" Click="Data_MenuBar_Click" />
+                                </MenuBarItem>
+
+                                <MenuBarItem Title="Help">
+                                    <MenuFlyoutItem Click="About_MenuBar_Click" Text="About"/>
+                                </MenuBarItem>
+                            </MenuBar>
+
+                            <local:GameProfilePage DataContext="{x:Bind}" />
+                        </StackPanel>
                     </TabViewItem>
                 </DataTemplate>
             </TabView.TabItemTemplate>

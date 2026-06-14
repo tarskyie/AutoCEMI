@@ -10,9 +10,6 @@ namespace AutoCEMI.Models
         [JsonPropertyName("profile_version")]
         public string ProfileVersion { get; set; } = string.Empty;
 
-        [JsonPropertyName("profile_id")]
-        public Guid ProfileId { get; set; } = Guid.NewGuid();
-
         private string _name = "New Profile";
 
         [JsonPropertyName("name")]
