@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -38,6 +40,32 @@ namespace AutoCEMI.GUI
         public void GoBack()
         {
             MainPage_Frame.GoBack();
+        }
+
+        public async Task DisplayAboutDialog()
+        {
+            ContentDialog dialog = new ContentDialog();
+
+            StackPanel stackPanel = new StackPanel();
+            TextBlock appTitleTextBlock = new TextBlock()
+            {
+                Text = "Autonomous Configuration & Execution Management Interface (AutoCEMI)"
+            };
+            TextBlock versionTextBlock = new TextBlock()
+            {
+                Text = $"v. {Assembly.GetExecutingAssembly().GetName().Version}"
+            };
+            stackPanel.Children.Add(appTitleTextBlock);
+            stackPanel.Children.Add(versionTextBlock);
+
+            dialog.XamlRoot = RootGrid.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "About";
+            dialog.SecondaryButtonText = "Close";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = stackPanel;
+
+            var result = await dialog.ShowAsync();
         }
     }
 }

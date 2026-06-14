@@ -27,5 +27,10 @@ namespace AutoCEMI.GUI.Views
         {
             App.MainWindowInstance.Navigate(typeof(DataPage));
         }
+
+        private async void ProfileFlyoutAbout_Click(object sender, RoutedEventArgs e)
+        {
+            await App.MainWindowInstance.DisplayAboutDialog();
+        }
     }
 }

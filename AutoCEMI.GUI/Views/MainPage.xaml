@@ -15,7 +15,8 @@
         <MenuFlyout x:Key="ProfileFlyout">
             <MenuFlyoutItem Text="Data"
                             Click="ProfileFlyoutData_Click"/>
-            <MenuFlyoutItem Text="Option 2" />
+            <MenuFlyoutItem Text="About"
+                            Click="ProfileFlyoutAbout_Click"/>
         </MenuFlyout>
     </Page.Resources>
 
