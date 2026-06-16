@@ -23,13 +23,18 @@
                     <Grid Width="200" />
                 </StackPanel>
             </TabView.TabStripFooter>
+
+            <TabView.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Menu" Modifiers="None" />
+            </TabView.KeyboardAccelerators>
             
             <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="vm:GameProfileViewModel">
                     <TabViewItem Header="{Binding Profile.Name, Mode=OneWay}">
                         <StackPanel>
-                            <MenuBar>
-                                <MenuBarItem Title="File">
+                            <MenuBar x:Name="MainMenu"
+                                     Loaded="MainMenu_Loaded">
+                                <MenuBarItem Title="File" AccessKey="N">
                                     <MenuFlyoutItem Text="New"
                                                     Click="New_MenuFlyoutItem_Click"/>
                                     <MenuFlyoutItem Text="Open..."
@@ -42,18 +47,24 @@
                                                     Click="Exit_MenuFlyoutItem_Click"/>
                                 </MenuBarItem>
 
-                                <MenuBarItem Title="Edit">
+                                <MenuBarItem Title="Edit" AccessKey="E">
                                     <MenuFlyoutItem Text="Undo"
                                                     Command="{x:Bind UndoCommand}"/>
                                     <MenuFlyoutItem Text="Redo"
                                                     Command="{x:Bind RedoCommand}"/>
                                 </MenuBarItem>
 
-                                <MenuBarItem Title="Execution">
+                                <MenuBarItem Title="Execution" AccessKey="X">
+                                    <MenuFlyoutItem Text="Run"
+                                                    Command="{x:Bind ExecuteProfileCommand}">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="F5" Modifiers="None" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="View and edit data" Click="Data_MenuBar_Click" />
                                 </MenuBarItem>
 
-                                <MenuBarItem Title="Help">
+                                <MenuBarItem Title="Help" AccessKey="H">
                                     <MenuFlyoutItem Click="About_MenuBar_Click" Text="About"/>
                                 </MenuBarItem>
                             </MenuBar>

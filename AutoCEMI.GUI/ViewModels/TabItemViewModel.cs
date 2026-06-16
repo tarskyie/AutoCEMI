@@ -1,10 +1,12 @@
 ﻿using AutoCEMI.Models;
+using AutoCEMI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace AutoCEMI.GUI.ViewModels
 {
@@ -23,6 +25,9 @@ namespace AutoCEMI.GUI.ViewModels
         private readonly Stack<List<string>> _undoStack = new();
         private readonly Stack<List<string>> _redoStack = new();
         private bool _isUndoingOrRedoing;
+
+        private GameExecute gameExecute = new();
+        
         public bool CanUndo()
         {
             if (_undoStack.Count > 0) return true;
@@ -41,6 +46,12 @@ namespace AutoCEMI.GUI.ViewModels
 
         public IRelayCommand MoveModUpCommand { get; }
         public IRelayCommand MoveModDownCommand { get; }
+
+        [RelayCommand]
+        private async Task ExecuteProfile()
+        {
+            await gameExecute.RunAsync(Profile);
+        }
 
         [RelayCommand(CanExecute = nameof(CanUndo))]
         public void Undo()

@@ -1,24 +1,29 @@
+using AutoCEMI.GUI.Services;
 using AutoCEMI.GUI.ViewModels;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Windowing;
-using System;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.Storage.Pickers;
+using System;
 using System.Threading.Tasks;
-using Microsoft.UI;
+using Windows.Foundation;
+using Windows.System;
 using WinRT.Interop;
-using AutoCEMI.GUI.Services;
 
 namespace AutoCEMI.GUI.Views
 {
     public sealed partial class MainPage : Page
     {
         private ServiceToWriteGameProfiles serviceToWriteGameProfiles = new();
+        private MenuBar? menuBar;
         public MainViewModel ViewModel { get; } = new();
         public MainPage()
         {
             InitializeComponent();
             DataContext = ViewModel;
+            this.Content.KeyDown += OnKeyDown;
         }
 
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
@@ -66,6 +71,15 @@ namespace AutoCEMI.GUI.Views
             await serviceToWriteGameProfiles.SaveProfileAsNew(Root_TabView.SelectedItem as GameProfileViewModel ?? new GameProfileViewModel());
         }
 
+        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Menu && menuBar != null) // Alt key
+            {
+                menuBar.Focus(FocusState.Keyboard);
+                e.Handled = true;
+            }
+        }
+
         private async Task OpenFileWithPicker()
         {
             var windowId = Win32Interop.GetWindowIdFromWindow(WindowNative.GetWindowHandle(App.MainWindowInstance));
@@ -79,6 +93,11 @@ namespace AutoCEMI.GUI.Views
             {
                 ViewModel.ReadAndOpenJsonProfileCommand.Execute(file.Path);
             }
+        }
+
+        private void MainMenu_Loaded(object sender, RoutedEventArgs e)
+        {
+            menuBar = (MenuBar)sender;
         }
     }
 }

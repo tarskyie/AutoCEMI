@@ -35,6 +35,11 @@ namespace AutoCEMI.Services
                 engineArgs.Add($"-iwad \"{wad.Path}\"");
             }
 
+            if (!File.Exists(sourcePortPath))
+            {
+                return;
+            }
+
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 FileName = sourcePortPath,
@@ -42,7 +47,12 @@ namespace AutoCEMI.Services
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
-            Process? gameProcess = Process.Start(startInfo);
+            Process? gameProcess;
+            try
+            {
+                gameProcess = Process.Start(startInfo);
+            }
+            catch { return; }
             if (gameProcess == null)
             {
                 return;
