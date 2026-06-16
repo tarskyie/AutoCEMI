@@ -43,10 +43,10 @@
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Edit">
-                                    <MenuFlyoutItem Text="Undo"/>
-                                    <MenuFlyoutItem Text="Cut"/>
-                                    <MenuFlyoutItem Text="Copy"/>
-                                    <MenuFlyoutItem Text="Paste"/>
+                                    <MenuFlyoutItem Text="Undo"
+                                                    Command="{x:Bind UndoCommand}"/>
+                                    <MenuFlyoutItem Text="Redo"
+                                                    Command="{x:Bind RedoCommand}"/>
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Execution">

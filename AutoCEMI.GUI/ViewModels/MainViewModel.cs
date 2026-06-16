@@ -45,5 +45,35 @@ namespace AutoCEMI.GUI.ViewModels
                 Tabs.Add(new GameProfileViewModel() { Profile = gameProfile ?? new GameProfile(), ProfileLocationPath = path });
             }
         }
+
+        [RelayCommand(CanExecute = nameof(CanUndo))]
+        private void CallUndo()
+        {
+            (SelectedTab as GameProfileViewModel)?.UndoCommand.Execute(this);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanRedo))]
+        private void CallRedo()
+        {
+            (SelectedTab as GameProfileViewModel)?.RedoCommand.Execute(this);
+        }
+
+        private bool CanUndo()
+        {
+            if (SelectedTab is GameProfileViewModel)
+            {
+                return SelectedTab.CanUndo();
+            }
+            return false;
+        }
+
+        private bool CanRedo()
+        {
+            if (SelectedTab is GameProfileViewModel)
+            {
+                return SelectedTab.CanRedo();
+            }
+            return false;
+        }
     }
 }
