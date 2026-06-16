@@ -7,11 +7,13 @@ using Microsoft.Windows.Storage.Pickers;
 using System.Threading.Tasks;
 using Microsoft.UI;
 using WinRT.Interop;
+using AutoCEMI.GUI.Services;
 
 namespace AutoCEMI.GUI.Views
 {
     public sealed partial class MainPage : Page
     {
+        private ServiceToWriteGameProfiles serviceToWriteGameProfiles = new();
         public MainViewModel ViewModel { get; } = new();
         public MainPage()
         {
@@ -47,6 +49,21 @@ namespace AutoCEMI.GUI.Views
         private async void Open_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             await OpenFileWithPicker();
+        }
+
+        private void Exit_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            App.MainWindowInstance.Close();
+        }
+
+        private async void Save_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await serviceToWriteGameProfiles.SaveProfile(Root_TabView.SelectedItem as GameProfileViewModel ?? new GameProfileViewModel());
+        }
+
+        private async void SaveAs_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await serviceToWriteGameProfiles.SaveProfileAsNew(Root_TabView.SelectedItem as GameProfileViewModel ?? new GameProfileViewModel());
         }
 
         private async Task OpenFileWithPicker()

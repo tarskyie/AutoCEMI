@@ -1,6 +1,7 @@
 ﻿using AutoCEMI.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.IO;
 
 namespace AutoCEMI.GUI.ViewModels
 {
@@ -8,6 +9,9 @@ namespace AutoCEMI.GUI.ViewModels
     {
         [ObservableProperty]
         private GameProfile profile = new();
+
+        [ObservableProperty]
+        private string? profileLocationPath;
 
         [ObservableProperty]
         private string? selectedMod;
@@ -26,10 +30,7 @@ namespace AutoCEMI.GUI.ViewModels
         {
             int idx = Profile.Mods.LoadOrder.IndexOf(modName);
 
-            if (idx >= 0)
-            {
-                return;
-            }
+            if (idx >= 0) return;
 
             Profile.Mods.LoadOrder.Add(modName);
         }

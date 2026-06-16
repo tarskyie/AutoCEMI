@@ -34,8 +34,12 @@
                                                     Click="New_MenuFlyoutItem_Click"/>
                                     <MenuFlyoutItem Text="Open..."
                                                     Click="Open_MenuFlyoutItem_Click"/>
-                                    <MenuFlyoutItem Text="Save"/>
-                                    <MenuFlyoutItem Text="Exit"/>
+                                    <MenuFlyoutItem Text="Save"
+                                                    Click="Save_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem Text="Save as"
+                                                    Click="SaveAs_MenuFlyoutItem_Click"/>
+                                    <MenuFlyoutItem Text="Exit"
+                                                    Click="Exit_MenuFlyoutItem_Click"/>
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Edit">
