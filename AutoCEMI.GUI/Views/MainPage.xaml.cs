@@ -1,7 +1,6 @@
 using AutoCEMI.GUI.Services;
 using AutoCEMI.GUI.ViewModels;
 using AutoCEMI.Models;
-using Microsoft.ML.OnnxRuntime;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -13,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
+using Windows.UI.WindowManagement;
 using WinRT.Interop;
 
 namespace AutoCEMI.GUI.Views
@@ -27,6 +27,15 @@ namespace AutoCEMI.GUI.Views
             InitializeComponent();
             DataContext = ViewModel;
             this.Content.KeyDown += OnKeyDown;
+
+            // I could not figure out how to save before closing, so for now, it simply opens empty tab
+            ViewModel.AddTabCommand.Execute(this);
+            ViewModel.PropertyChanged += (sender, e) => { 
+                if (ViewModel.Tabs.Count == 0)
+                {
+                    App.MainWindowInstance.Close();
+                }
+            };
         }
 
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
@@ -62,6 +71,11 @@ namespace AutoCEMI.GUI.Views
         private void Exit_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             App.MainWindowInstance.Close();
+        }
+
+        private void CloseTab_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CloseTabCommand.Execute(Root_TabView.SelectedItem as GameProfileViewModel);
         }
 
         private async void Save_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)

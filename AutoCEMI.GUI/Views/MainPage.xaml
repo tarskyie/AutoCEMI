@@ -59,6 +59,12 @@
                                             <KeyboardAccelerator Key="S" Modifiers="Control, Shift" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Close Tab"
+                                                    Click="CloseTab_MenuFlyoutItem_Click">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="W" Modifiers="Control" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Exit"
                                                     Click="Exit_MenuFlyoutItem_Click">
                                         <MenuFlyoutItem.KeyboardAccelerators>

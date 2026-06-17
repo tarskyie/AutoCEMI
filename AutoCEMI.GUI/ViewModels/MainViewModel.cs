@@ -1,4 +1,5 @@
 ﻿using AutoCEMI.Models;
+using AutoCEMI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -25,12 +26,14 @@ namespace AutoCEMI.GUI.ViewModels
         {
             Tabs.Add(new GameProfileViewModel());
             SelectedTab = Tabs.Last();
+            _ = SaveState();
         }
 
         [RelayCommand]
         private void CloseTab(GameProfileViewModel tab)
         {
             Tabs.Remove(tab);
+            _ = SaveState();
         }
 
         [RelayCommand]
@@ -43,6 +46,7 @@ namespace AutoCEMI.GUI.ViewModels
                 gameProfile = JsonSerializer.Deserialize<GameProfile>(jsonContent);
 
                 Tabs.Add(new GameProfileViewModel() { Profile = gameProfile ?? new GameProfile(), ProfileLocationPath = path });
+                _ = SaveState();
             }
         }
 
@@ -75,5 +79,31 @@ namespace AutoCEMI.GUI.ViewModels
             }
             return false;
         }
+
+        public async Task SaveState()
+        {
+            var state = new WorkspaceState
+            {
+                SelectedTabIndex = Tabs.IndexOf(SelectedTab),
+                Tabs = Tabs.Select(t => new TabState
+                {
+                    Profile = t.Profile,
+                }).ToList()
+            };
+
+            var json = JsonSerializer.Serialize(state);
+            await File.WriteAllTextAsync($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\AutoCEMI\\tabs.json", json);
+        }
+    }
+
+    public class WorkspaceState
+    {
+        public List<TabState> Tabs { get; set; } = [];
+        public int SelectedTabIndex { get; set; }
+    }
+
+    public class TabState
+    {
+        public GameProfile Profile{ get; set; }
     }
 }
