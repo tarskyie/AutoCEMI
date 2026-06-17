@@ -36,22 +36,50 @@
                                      Loaded="MainMenu_Loaded">
                                 <MenuBarItem Title="File" AccessKey="N">
                                     <MenuFlyoutItem Text="New"
-                                                    Click="New_MenuFlyoutItem_Click"/>
+                                                    Click="New_MenuFlyoutItem_Click">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="N" Modifiers="Control" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Open..."
-                                                    Click="Open_MenuFlyoutItem_Click"/>
+                                                    Click="Open_MenuFlyoutItem_Click">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="O" Modifiers="Control" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Save"
-                                                    Click="Save_MenuFlyoutItem_Click"/>
+                                                    Click="Save_MenuFlyoutItem_Click">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="S" Modifiers="Control" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Save as"
-                                                    Click="SaveAs_MenuFlyoutItem_Click"/>
+                                                    Click="SaveAs_MenuFlyoutItem_Click">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="S" Modifiers="Control, Shift" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Exit"
-                                                    Click="Exit_MenuFlyoutItem_Click"/>
+                                                    Click="Exit_MenuFlyoutItem_Click">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Q" Modifiers="Control" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Edit" AccessKey="E">
                                     <MenuFlyoutItem Text="Undo"
-                                                    Command="{x:Bind UndoCommand}"/>
+                                                    Command="{x:Bind UndoCommand}">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Z" Modifiers="Control" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Redo"
-                                                    Command="{x:Bind RedoCommand}"/>
+                                                    Command="{x:Bind RedoCommand}">
+                                        <MenuFlyoutItem.KeyboardAccelerators>
+                                            <KeyboardAccelerator Key="Y" Modifiers="Control" />
+                                        </MenuFlyoutItem.KeyboardAccelerators>
+                                    </MenuFlyoutItem>
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Execution" AccessKey="X">
