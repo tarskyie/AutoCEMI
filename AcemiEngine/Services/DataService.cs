@@ -251,5 +251,12 @@ namespace AutoCEMI.Services
         {
             get => GetProfile();
         }
+
+        public string GetIwadPathByName(string name)
+        {
+            var result = iwads.FirstOrDefault(n => n.Name == name);
+            if (result == null) return string.Empty;
+            return result.Path;
+        }
     }
 }

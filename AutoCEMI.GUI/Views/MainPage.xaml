@@ -61,6 +61,8 @@
                                             <KeyboardAccelerator Key="F5" Modifiers="None" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="Edit execution parameters" 
+                                                    Click="EditExecParameters_Click"/>
                                     <MenuFlyoutItem Text="View and edit data" Click="Data_MenuBar_Click" />
                                 </MenuBarItem>
 

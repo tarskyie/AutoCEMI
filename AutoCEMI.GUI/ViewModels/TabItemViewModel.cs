@@ -21,6 +21,13 @@ namespace AutoCEMI.GUI.ViewModels
         [ObservableProperty]
         private string? selectedMod;
 
+        [ObservableProperty]
+        private ExecutionOptions executionOptions = new();
+
+        private List<string> _mapsCache = new();
+        private string _previousWadPath = string.Empty;
+        private DataService dataService = new DataService();
+
         // Undo/Redo
         private readonly Stack<List<string>> _undoStack = new();
         private readonly Stack<List<string>> _redoStack = new();
@@ -28,6 +35,16 @@ namespace AutoCEMI.GUI.ViewModels
 
         private GameExecute gameExecute = new();
         
+        public List<string> GetMaps()
+        {
+            if (Profile.Game.Iwad != _previousWadPath)
+            {
+                _mapsCache = DataExtractionService.ExtractMapNames(dataService.GetIwadPathByName(Profile.Game.Iwad));
+                _previousWadPath = Profile.Game.Iwad;
+            }
+            return _mapsCache;
+        }
+
         public bool CanUndo()
         {
             if (_undoStack.Count > 0) return true;
@@ -50,7 +67,7 @@ namespace AutoCEMI.GUI.ViewModels
         [RelayCommand]
         private async Task ExecuteProfile()
         {
-            await gameExecute.RunAsync(Profile);
+            await gameExecute.RunAsync(Profile, ExecutionOptions);
         }
 
         [RelayCommand(CanExecute = nameof(CanUndo))]

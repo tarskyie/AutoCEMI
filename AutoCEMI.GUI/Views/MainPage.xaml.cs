@@ -1,5 +1,7 @@
 using AutoCEMI.GUI.Services;
 using AutoCEMI.GUI.ViewModels;
+using AutoCEMI.Models;
+using Microsoft.ML.OnnxRuntime;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -7,6 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.Storage.Pickers;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
@@ -69,6 +72,51 @@ namespace AutoCEMI.GUI.Views
         private async void SaveAs_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             await serviceToWriteGameProfiles.SaveProfileAsNew(Root_TabView.SelectedItem as GameProfileViewModel ?? new GameProfileViewModel());
+        }
+
+        private async void EditExecParameters_Click(object sender, RoutedEventArgs e)
+        {
+            if (Root_TabView.SelectedItem is GameProfileViewModel gameProfileViewModel)
+            {
+                StackPanel stackPanel = new StackPanel()
+                {
+                    Spacing = 8
+                };
+                ComboBox mapsComboBox = new ComboBox()
+                {
+                    ItemsSource = new ObservableCollection<string> (gameProfileViewModel.GetMaps()),
+                    Header = "Map",
+                    SelectedItem = gameProfileViewModel.ExecutionOptions.Map,
+                };
+                Button resetMapButton = new Button() {
+                    Content = "Reset map selection"
+                };
+                resetMapButton.Click += (sender, e) => mapsComboBox.SelectedItem = null;
+                Slider skillSlider = new Slider()
+                {
+                    Header = "Skill",
+                    Minimum = -1,
+                    Maximum = 4,
+                    StepFrequency = 1,
+                    Value = gameProfileViewModel.ExecutionOptions.Difficulty
+                };
+                
+                stackPanel.Children.Add(mapsComboBox);
+                stackPanel.Children.Add(resetMapButton);
+                stackPanel.Children.Add(skillSlider);
+
+                ContentDialog contentDialog = new ContentDialog() {
+                    Title = "Edit execution parameters",
+                    Content = stackPanel,
+                    XamlRoot = XamlRoot,
+                    PrimaryButtonText = "Ok"
+                };
+                
+                ContentDialogResult result = await contentDialog.ShowAsync();
+
+                gameProfileViewModel.ExecutionOptions.Map = mapsComboBox.SelectedItem as string ?? string.Empty;
+                gameProfileViewModel.ExecutionOptions.Difficulty = (int)skillSlider.Value;
+            }
         }
 
         private void OnKeyDown(object sender, KeyRoutedEventArgs e)
