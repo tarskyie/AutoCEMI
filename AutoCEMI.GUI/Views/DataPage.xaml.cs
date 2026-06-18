@@ -1,10 +1,14 @@
 using AutoCEMI.GUI.Services;
 using AutoCEMI.GUI.ViewModels;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.Storage.Pickers;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.VoiceCommands;
+using WinRT.Interop;
 
 namespace AutoCEMI.GUI.Views
 {
@@ -35,15 +39,41 @@ namespace AutoCEMI.GUI.Views
                 Header = "Name"
             };
 
+            Grid pathGrid = new()
+            {
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                    new ColumnDefinition { Width = GridLength.Auto }
+                }
+            };
+
             TextBox pathBox = new()
             {
                 PlaceholderText = "Path to file",
-                Header = "Path"
+                Header = "Path",
+                VerticalAlignment = VerticalAlignment.Bottom,
             };
+
+            Button pathPickerButton = new()
+            {
+                Content = "Pick",
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Right,
+            };
+
+            pathPickerButton.Click += async (sender, e) => await PickPathForFile(pathBox);
+
+            Grid.SetColumn(pathBox, 0);
+            Grid.SetColumn(pathPickerButton, 1);
+
+            pathGrid.Children.Add(pathBox);
+            pathGrid.Children.Add(pathPickerButton);
+
 
             StackPanel stackPanel = new StackPanel()
             {
-                Children = { nameBox, pathBox },
+                Children = { nameBox, pathGrid },
                 Spacing = 16
             };
 
@@ -83,6 +113,18 @@ namespace AutoCEMI.GUI.Views
                     }
                 }
             }
+        }
+
+        private async Task PickPathForFile(TextBox textBox)
+        {
+            var windowId = Win32Interop.GetWindowIdFromWindow(WindowNative.GetWindowHandle(App.MainWindowInstance));
+            var openPicker = new FileOpenPicker(windowId);
+            openPicker.FileTypeFilter.Add("*");
+
+            // Open the picker
+            var file = await openPicker.PickSingleFileAsync();
+
+            textBox.Text = file.Path;
         }
         private async void AddIwads_Button_Click(object sender, RoutedEventArgs e) { await AddItemDialog("IWAD"); }
         private async void AddMods_Button_Click(object sender, RoutedEventArgs e) { await AddItemDialog("Mod"); }

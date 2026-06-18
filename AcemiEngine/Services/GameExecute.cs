@@ -10,10 +10,9 @@ namespace AutoCEMI.Services
         {
             string sourcePortPath = gameProfile.Game.SourcePortPath;
             List<string> engineArgs = new();
-            for (int i = 0; i < gameProfile.Game.CustomArguments.Count; i++)
-            {
-                engineArgs.Add(gameProfile.Game.CustomArguments[i]);
-            }
+            
+            engineArgs.Add(gameProfile.Game.CustomArguments);
+
             for (int i = 0; i < gameProfile.Mods.LoadOrder.Count; i++)
             {
                 var mod = dataService.mods.FirstOrDefault(m => m.Name == gameProfile.Mods.LoadOrder[i]);

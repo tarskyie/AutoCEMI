@@ -43,8 +43,9 @@ namespace AutoCEMI.GUI.ViewModels
             {
                 string jsonContent = File.ReadAllText(path);
                 GameProfile? gameProfile = new();
-                gameProfile = JsonSerializer.Deserialize<GameProfile>(jsonContent);
-
+                try
+                { gameProfile = JsonSerializer.Deserialize<GameProfile>(jsonContent); }
+                catch { return; }
                 Tabs.Add(new GameProfileViewModel() { Profile = gameProfile ?? new GameProfile(), ProfileLocationPath = path });
                 _ = SaveState();
             }

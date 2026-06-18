@@ -63,7 +63,7 @@ namespace AutoCEMI.Models
         public string CompatibilityLevel { get; set; } = string.Empty;
 
         [JsonPropertyName("custom_arguments")]
-        public List<string> CustomArguments { get; set; } = new();
+        public string CustomArguments { get; set; } = string.Empty;
     }
 
     public class ModsSettings

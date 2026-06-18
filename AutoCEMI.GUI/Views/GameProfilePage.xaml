@@ -33,7 +33,8 @@
                          Text="{Binding Profile.Game.Iwad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Header="Source Port"
                          Text="{Binding Profile.Game.SourcePort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <!-- CustomArguments: rendered as an editable list in code-behind or via ItemsControl -->
+                <TextBox Header="Custom Arguments"
+                         Text="{Binding Profile.Game.CustomArguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
             <!-- Mods Settings -->
