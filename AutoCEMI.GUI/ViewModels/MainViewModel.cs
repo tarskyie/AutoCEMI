@@ -83,12 +83,14 @@ namespace AutoCEMI.GUI.ViewModels
 
         public void SwitchToNextTab()
         {
+            if (SelectedTab == null) return;
             int TabIndex = Tabs.IndexOf(SelectedTab) + 1 % Tabs.Count();
             SelectedTab = Tabs[TabIndex];
         }
 
         public async Task SaveState()
         {
+            if (SelectedTab == null) return;
             var state = new WorkspaceState
             {
                 SelectedTabIndex = Tabs.IndexOf(SelectedTab),
@@ -110,10 +112,11 @@ namespace AutoCEMI.GUI.ViewModels
                 {
                     foreach (var t in state.Tabs)
                     {
+                        if (t.Profile == null) continue;
                         Tabs.Add(new GameProfileViewModel { Profile = t.Profile });
                     }
+                    SelectedTab = Tabs[state.SelectedTabIndex];
                 }
-                SelectedTab = Tabs[state.SelectedTabIndex];
             } 
             catch {
                 Tabs.Add(new GameProfileViewModel());
@@ -135,6 +138,6 @@ namespace AutoCEMI.GUI.ViewModels
 
     public class TabState
     {
-        public GameProfile Profile{ get; set; }
+        public GameProfile? Profile{ get; set; }
     }
 }
