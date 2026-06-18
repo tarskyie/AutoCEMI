@@ -2,6 +2,7 @@ using AutoCEMI.GUI.Services;
 using AutoCEMI.GUI.ViewModels;
 using AutoCEMI.Models;
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.WindowManagement;
 using WinRT.Interop;
 
@@ -34,6 +36,7 @@ namespace AutoCEMI.GUI.Views
                     App.MainWindowInstance.Close();
                 }
             };
+
             _ = SleepSometimeAndAssignViewmodelToWindow();
         }
         private async Task SleepSometimeAndAssignViewmodelToWindow()
@@ -146,6 +149,15 @@ namespace AutoCEMI.GUI.Views
             if (e.Key == VirtualKey.Menu && menuBar != null) // Alt key
             {
                 menuBar.Focus(FocusState.Keyboard);
+                e.Handled = true;
+            }
+
+            var ctrlState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
+            bool isCtrlPressed = (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+
+            if (isCtrlPressed && e.Key == VirtualKey.Tab)
+            {
+                ViewModel.SwitchToNextTab();
                 e.Handled = true;
             }
         }

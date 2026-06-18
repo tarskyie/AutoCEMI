@@ -81,6 +81,12 @@ namespace AutoCEMI.GUI.ViewModels
             return false;
         }
 
+        public void SwitchToNextTab()
+        {
+            int TabIndex = Tabs.IndexOf(SelectedTab) + 1 % Tabs.Count();
+            SelectedTab = Tabs[TabIndex];
+        }
+
         public async Task SaveState()
         {
             var state = new WorkspaceState
