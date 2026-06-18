@@ -21,6 +21,7 @@ namespace AutoCEMI.GUI
 {
     public sealed partial class MainWindow : Window
     {
+        public MainViewModel? mainViewModel { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +31,14 @@ namespace AutoCEMI.GUI
                 AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
             }
             MainPage_Frame.Navigate(typeof(Views.MainPage));
+            AppWindow.Closing += AppWindow_Closing;
+        }
+
+        private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+        {
+            if (mainViewModel == null)
+                return;
+            await mainViewModel.SaveState();
         }
 
         public void Navigate(Type type)

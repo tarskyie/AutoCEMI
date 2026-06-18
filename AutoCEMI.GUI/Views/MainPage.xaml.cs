@@ -36,8 +36,13 @@ namespace AutoCEMI.GUI.Views
                     App.MainWindowInstance.Close();
                 }
             };
+            _ = SleepSometimeAndAssignViewmodelToWindow();
         }
-
+        private async Task SleepSometimeAndAssignViewmodelToWindow()
+        {
+            await Task.Delay(1000);
+            App.MainWindowInstance.mainViewModel = ViewModel;
+        }
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             ViewModel.CloseTabCommand.Execute(args.Item as GameProfileViewModel);
