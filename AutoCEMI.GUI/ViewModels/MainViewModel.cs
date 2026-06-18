@@ -95,6 +95,30 @@ namespace AutoCEMI.GUI.ViewModels
             var json = JsonSerializer.Serialize(state);
             await File.WriteAllTextAsync($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\AutoCEMI\\tabs.json", json);
         }
+
+        public async Task LoadState()
+        {
+            try{
+                var state = JsonSerializer.Deserialize<WorkspaceState>(File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\AutoCEMI\\tabs.json"));
+                if (state != null)
+                {
+                    foreach (var t in state.Tabs)
+                    {
+                        Tabs.Add(new GameProfileViewModel { Profile = t.Profile });
+                    }
+                }
+                SelectedTab = Tabs[state.SelectedTabIndex];
+            } 
+            catch {
+                Tabs.Add(new GameProfileViewModel());
+                SelectedTab = Tabs[0];
+            }
+        }
+
+        public MainViewModel()
+        {
+            _ = LoadState();
+        }
     }
 
     public class WorkspaceState

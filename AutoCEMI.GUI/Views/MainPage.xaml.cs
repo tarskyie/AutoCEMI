@@ -28,8 +28,6 @@ namespace AutoCEMI.GUI.Views
             DataContext = ViewModel;
             this.Content.KeyDown += OnKeyDown;
 
-            // I could not figure out how to save before closing, so for now, it simply opens empty tab
-            ViewModel.AddTabCommand.Execute(this);
             ViewModel.PropertyChanged += (sender, e) => { 
                 if (ViewModel.Tabs.Count == 0)
                 {
