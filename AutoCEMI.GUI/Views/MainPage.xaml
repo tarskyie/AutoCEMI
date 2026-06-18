@@ -11,6 +11,10 @@
     mc:Ignorable="d"
     x:Name="RootPage">
 
+    <Page.DataContext>
+        <vm:MainViewModel />
+    </Page.DataContext>
+
     <Grid>
         <TabView Margin="0,6,0,0"
                  TabItemsSource="{x:Bind ViewModel.Tabs}"
@@ -75,22 +79,14 @@
 
                                 <MenuBarItem Title="Edit" AccessKey="E">
                                     <MenuFlyoutItem Text="Undo"
-                                                    Command="{x:Bind UndoCommand}">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="Z" Modifiers="Control" />
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
+                                                    Command="{x:Bind UndoCommand}" />
                                     <MenuFlyoutItem Text="Redo"
-                                                    Command="{x:Bind RedoCommand}">
-                                        <MenuFlyoutItem.KeyboardAccelerators>
-                                            <KeyboardAccelerator Key="Y" Modifiers="Control" />
-                                        </MenuFlyoutItem.KeyboardAccelerators>
-                                    </MenuFlyoutItem>
+                                                    Command="{x:Bind RedoCommand}" />
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Execution" AccessKey="X">
                                     <MenuFlyoutItem Text="Run"
-                                                    Command="{x:Bind ExecuteProfileCommand}">
+                                                    Click="Run_MenuFlyoutItem_Click">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="F5" Modifiers="None" />
                                         </MenuFlyoutItem.KeyboardAccelerators>

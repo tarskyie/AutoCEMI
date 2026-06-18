@@ -88,6 +88,11 @@ namespace AutoCEMI.GUI.Views
             await serviceToWriteGameProfiles.SaveProfileAsNew(Root_TabView.SelectedItem as GameProfileViewModel ?? new GameProfileViewModel());
         }
 
+        private void Run_MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            (Root_TabView.SelectedItem as GameProfileViewModel ?? new GameProfileViewModel()).ExecuteProfileCommand.Execute(this);
+        }
+
         private async void EditExecParameters_Click(object sender, RoutedEventArgs e)
         {
             if (Root_TabView.SelectedItem is GameProfileViewModel gameProfileViewModel)
