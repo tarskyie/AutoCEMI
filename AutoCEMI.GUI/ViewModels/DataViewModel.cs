@@ -11,7 +11,7 @@ namespace AutoCEMI.GUI.ViewModels
         private DataService dataService = new DataService();
 
         [ObservableProperty]
-        private string statusMessage;
+        private string statusMessage = string.Empty;
 
         [RelayCommand]
         private void RemoveMod(Mod mod)

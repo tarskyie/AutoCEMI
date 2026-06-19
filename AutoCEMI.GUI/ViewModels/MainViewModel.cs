@@ -32,6 +32,10 @@ namespace AutoCEMI.GUI.ViewModels
         [RelayCommand]
         private void CloseTab(GameProfileViewModel tab)
         {
+            if (Tabs.Count == 1)
+            {
+                _ = File.WriteAllTextAsync($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\AutoCEMI\\tabs.json", "{}");
+            }
             Tabs.Remove(tab);
             _ = SaveState();
         }
@@ -39,16 +43,7 @@ namespace AutoCEMI.GUI.ViewModels
         [RelayCommand]
         private void ReadAndOpenJsonProfile(string path)
         {
-            if (File.Exists(path))
-            {
-                string jsonContent = File.ReadAllText(path);
-                GameProfile? gameProfile = new();
-                try
-                { gameProfile = JsonSerializer.Deserialize<GameProfile>(jsonContent); }
-                catch { return; }
-                Tabs.Add(new GameProfileViewModel() { Profile = gameProfile ?? new GameProfile(), ProfileLocationPath = path });
-                _ = SaveState();
-            }
+            _ = OpenProfileFromPath(path);
         }
 
         [RelayCommand(CanExecute = nameof(CanUndo))]
@@ -106,7 +101,17 @@ namespace AutoCEMI.GUI.ViewModels
 
         public async Task LoadState()
         {
-            try{
+            string[] commandLineArgs = Environment.GetCommandLineArgs();
+            if (commandLineArgs.Length > 0)
+            {
+                foreach (string arg in commandLineArgs)
+                {
+                    await OpenProfileFromPath(arg);
+                }
+            }
+
+            try
+            {
                 var state = JsonSerializer.Deserialize<WorkspaceState>(File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\AutoCEMI\\tabs.json"));
                 if (state != null)
                 {
@@ -119,8 +124,28 @@ namespace AutoCEMI.GUI.ViewModels
                 }
             } 
             catch {
-                Tabs.Add(new GameProfileViewModel());
-                SelectedTab = Tabs[0];
+                if (Tabs.Count == 0)
+                {
+                    Tabs.Add(new GameProfileViewModel());
+                    SelectedTab = Tabs[0];
+                }
+            }
+        }
+
+        public async Task OpenProfileFromPath(string path)
+        {
+            if (!File.Exists(path)) return;
+            GameProfile? profile;
+            try
+            {
+                profile = JsonSerializer.Deserialize<GameProfile>(File.ReadAllText(path));
+            }
+            catch { return; }
+            if (profile != null)
+            {
+                var vm = new GameProfileViewModel() { Profile = profile, ProfileLocationPath = path };
+                Tabs.Add(vm);
+                SelectedTab = Tabs[Tabs.Count - 1];
             }
         }
 

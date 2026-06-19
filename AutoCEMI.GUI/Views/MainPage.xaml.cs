@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
@@ -30,14 +31,14 @@ namespace AutoCEMI.GUI.Views
             DataContext = ViewModel;
             this.Content.KeyDown += OnKeyDown;
 
+            _ = SleepSometimeAndAssignViewmodelToWindow();
+
             ViewModel.PropertyChanged += (sender, e) => { 
-                if (ViewModel.Tabs.Count == 0)
+                if (ViewModel.Tabs.Count == 0 && App.MainWindowInstance != null)
                 {
                     App.MainWindowInstance.Close();
                 }
             };
-
-            _ = SleepSometimeAndAssignViewmodelToWindow();
         }
         private async Task SleepSometimeAndAssignViewmodelToWindow()
         {
