@@ -40,37 +40,43 @@
                                      Loaded="MainMenu_Loaded">
                                 <MenuBarItem Title="File" AccessKey="N">
                                     <MenuFlyoutItem Text="New"
-                                                    Click="New_MenuFlyoutItem_Click">
+                                                    Click="New_MenuFlyoutItem_Click"
+                                                    AccessKey="N">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="N" Modifiers="Control" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Open..."
-                                                    Click="Open_MenuFlyoutItem_Click">
+                                                    Click="Open_MenuFlyoutItem_Click"
+                                                    AccessKey="O">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="O" Modifiers="Control" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Save"
-                                                    Click="Save_MenuFlyoutItem_Click">
+                                                    Click="Save_MenuFlyoutItem_Click"
+                                                    AccessKey="S">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="S" Modifiers="Control" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Save as"
-                                                    Click="SaveAs_MenuFlyoutItem_Click">
+                                                    Click="SaveAs_MenuFlyoutItem_Click"
+                                                    AccessKey="A">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="S" Modifiers="Control, Shift" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Close Tab"
-                                                    Click="CloseTab_MenuFlyoutItem_Click">
+                                                    Click="CloseTab_MenuFlyoutItem_Click"
+                                                    AccessKey="C">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="W" Modifiers="Control" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Exit"
-                                                    Click="Exit_MenuFlyoutItem_Click">
+                                                    Click="Exit_MenuFlyoutItem_Click"
+                                                    AccessKey="X">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="Q" Modifiers="Control" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
@@ -85,19 +91,22 @@
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Execution" AccessKey="X">
-                                    <MenuFlyoutItem Text="Run"
+                                    <MenuFlyoutItem Text="Run" 
+                                                    AccessKey="R"
                                                     Click="Run_MenuFlyoutItem_Click">
                                         <MenuFlyoutItem.KeyboardAccelerators>
                                             <KeyboardAccelerator Key="F5" Modifiers="None" />
                                         </MenuFlyoutItem.KeyboardAccelerators>
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem Text="Edit execution parameters" 
-                                                    Click="EditExecParameters_Click"/>
-                                    <MenuFlyoutItem Text="View and edit data" Click="Data_MenuBar_Click" />
+                                                    Click="EditExecParameters_Click"
+                                                    AccessKey="E"/>
+                                    <MenuFlyoutItem Text="View and edit data" Click="Data_MenuBar_Click" 
+                                                    AccessKey="D"/>
                                 </MenuBarItem>
 
                                 <MenuBarItem Title="Help" AccessKey="H">
-                                    <MenuFlyoutItem Click="About_MenuBar_Click" Text="About"/>
+                                    <MenuFlyoutItem Click="About_MenuBar_Click" Text="About" AccessKey="A"/>
                                 </MenuBarItem>
                             </MenuBar>
 
