@@ -5,9 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.Storage.Pickers;
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.VoiceCommands;
 using WinRT.Interop;
 
 namespace AutoCEMI.GUI.Views
@@ -101,13 +99,13 @@ namespace AutoCEMI.GUI.Views
                         switch (type)
                         {
                             case ("IWAD"):
-                                vm.DataService.AddIwad(new Models.Iwad(itemName,itemPath));
+                                vm.DataService.AddIwad(new Models.Iwad(itemName, itemPath));
                                 break;
                             case ("Mod"):
                                 vm.DataService.AddMod(new Models.Mod(itemName, itemPath));
                                 break;
                             case ("Source Port"):
-                                vm.DataService.AddPort(new Models.SourcePort(itemName,itemPath));
+                                vm.DataService.AddPort(new Models.SourcePort(itemName, itemPath));
                                 break;
                         }
                     }

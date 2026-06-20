@@ -61,7 +61,7 @@ namespace AutoCEMI.CLI
                 var name = parseResult.GetValue(addNameArg);
                 var path = parseResult.GetValue(addPathArg);
 
-                if (name  == null || path == null)
+                if (name == null || path == null)
                 {
                     Console.WriteLine("Error: name and path arguments are required.");
                     return 0;
@@ -228,7 +228,7 @@ namespace AutoCEMI.CLI
                     GameProfile? gameProfile = null;
                     try
                     {
-                        gameProfile = JsonSerializer.Deserialize<GameProfile>(jsonContent);
+                        gameProfile = JsonSerializer.Deserialize<GameProfile>(jsonContent, AutoCEMI.AppJsonContext.Default.GameProfile);
                     }
                     catch (Exception ex)
                     {

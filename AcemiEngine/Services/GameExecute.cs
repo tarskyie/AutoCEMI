@@ -10,7 +10,7 @@ namespace AutoCEMI.Services
         {
             string sourcePortPath = gameProfile.Game.SourcePortPath;
             List<string> engineArgs = new();
-            
+
             engineArgs.Add(gameProfile.Game.CustomArguments);
 
             for (int i = 0; i < gameProfile.Mods.LoadOrder.Count; i++)
@@ -39,7 +39,7 @@ namespace AutoCEMI.Services
 
                 if (executionOptions.Difficulty >= 0) engineArgs.Add($"-skill {executionOptions.Difficulty + 1}");
             }
-            
+
             // look up source port and iwad path from data service
             var sourcePort = dataService.sourcePorts.FirstOrDefault(p => p.Name == gameProfile.Game.SourcePort);
             if (sourcePort != null)

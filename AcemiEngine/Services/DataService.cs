@@ -31,7 +31,7 @@ namespace AutoCEMI.Services
         private void CreateProfile()
         {
             UserProfile profile = new();
-            string json = System.Text.Json.JsonSerializer.Serialize(profile);
+            string json = System.Text.Json.JsonSerializer.Serialize(profile, AppJsonContext.Default.UserProfile);
             File.WriteAllText($"{persistentDataDirectoryPath}\\{profileFileName}", json);
         }
         private void CreateDatabase()
@@ -171,7 +171,8 @@ namespace AutoCEMI.Services
             }
         }
 
-        public void AddPort(SourcePort port) {
+        public void AddPort(SourcePort port)
+        {
             var idx = portsList.FindIndex(m => m.Name == port.Name);
             if (idx >= 0)
             {
@@ -181,17 +182,19 @@ namespace AutoCEMI.Services
             sourcePorts.Add(port);
             SaveData();
         }
-        public void AddIwad(Iwad iwad) { 
+        public void AddIwad(Iwad iwad)
+        {
             var idx = iwadsList.FindIndex(m => m.Name == iwad.Name);
             if (idx >= 0)
             {
                 iwads[idx] = iwad;
                 return;
             }
-            iwads.Add(iwad); 
+            iwads.Add(iwad);
             SaveData();
         }
-        public void AddMod(Mod mod) { 
+        public void AddMod(Mod mod)
+        {
             var idx = modsList.FindIndex(m => m.Name == mod.Name);
             if (idx >= 0)
             {
@@ -201,50 +204,54 @@ namespace AutoCEMI.Services
             mods.Add(mod);
             SaveData();
         }
-        public void RemovePort(string portName) { 
+        public void RemovePort(string portName)
+        {
             var port = sourcePorts.FirstOrDefault(m => m.Name == portName);
             if (port == null)
                 return;
-            sourcePorts.Remove(port); 
-            SaveData(); 
+            sourcePorts.Remove(port);
+            SaveData();
         }
-        public void RemoveIwad(string iwadName) { 
+        public void RemoveIwad(string iwadName)
+        {
             var iwad = iwads.FirstOrDefault(m => m.Name == iwadName);
             if (iwad == null) return;
             iwads.Remove(iwad);
             SaveData();
         }
-        public void RemoveMod(string modName) { 
+        public void RemoveMod(string modName)
+        {
             var mod = mods.FirstOrDefault(m => m.Name == modName);
             if (mod == null) return;
-            mods.Remove(mod); 
+            mods.Remove(mod);
             SaveData();
         }
 
         public void UpdatePlayertime(TimeSpan? delta)
         {
             var profilePath = Path.Combine(persistentDataDirectoryPath, profileFileName);
-            var profile = JsonSerializer.Deserialize<UserProfile>(File.ReadAllText(profilePath))
+            var profile = JsonSerializer.Deserialize<UserProfile>(File.ReadAllText(profilePath), AppJsonContext.Default.UserProfile)
                           ?? new UserProfile();
-            if (delta.HasValue){
+            if (delta.HasValue)
+            {
                 profile.PlayTime += delta.Value;
             }
             else
             {
                 profile.PlayTime = TimeSpan.Zero;
             }
-            File.WriteAllText(profilePath, JsonSerializer.Serialize(profile));
+            File.WriteAllText(profilePath, JsonSerializer.Serialize(profile, AppJsonContext.Default.UserProfile));
         }
         public void DisplayStats()
         {
-            UserProfile? profile = JsonSerializer.Deserialize<UserProfile>(File.ReadAllText($"{persistentDataDirectoryPath}//{profileFileName}"));
+            UserProfile? profile = JsonSerializer.Deserialize<UserProfile>(File.ReadAllText($"{persistentDataDirectoryPath}//{profileFileName}"), AppJsonContext.Default.UserProfile);
             Console.WriteLine($"Total playtime: {profile?.PlayTime}");
         }
 
         public UserProfile GetProfile()
         {
             var profilePath = Path.Combine(persistentDataDirectoryPath, profileFileName);
-            return JsonSerializer.Deserialize<UserProfile>(File.ReadAllText(profilePath))
+            return JsonSerializer.Deserialize<UserProfile>(File.ReadAllText(profilePath), AppJsonContext.Default.UserProfile)
                    ?? new UserProfile();
         }
         public UserProfile Profile

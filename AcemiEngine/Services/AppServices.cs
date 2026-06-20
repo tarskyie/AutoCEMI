@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoCEMI.Services
+﻿namespace AutoCEMI.Services
 {
     public class AppServices
     {

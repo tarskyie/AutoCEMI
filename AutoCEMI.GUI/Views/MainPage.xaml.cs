@@ -1,21 +1,16 @@
 using AutoCEMI.GUI.Services;
 using AutoCEMI.GUI.ViewModels;
-using AutoCEMI.Models;
 using Microsoft.UI;
 using Microsoft.UI.Input;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.WindowManagement;
 using WinRT.Interop;
 
 namespace AutoCEMI.GUI.Views
@@ -33,7 +28,8 @@ namespace AutoCEMI.GUI.Views
 
             _ = SleepSometimeAndAssignViewmodelToWindow();
 
-            ViewModel.PropertyChanged += (sender, e) => { 
+            ViewModel.PropertyChanged += (sender, e) =>
+            {
                 if (ViewModel.Tabs.Count == 0 && App.MainWindowInstance != null)
                 {
                     App.MainWindowInstance.Close();
@@ -43,7 +39,7 @@ namespace AutoCEMI.GUI.Views
         private async Task SleepSometimeAndAssignViewmodelToWindow()
         {
             await Task.Delay(1000);
-            App.MainWindowInstance.mainViewModel = ViewModel;
+            App.MainWindowInstance?.mainViewModel = ViewModel;
         }
         private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
@@ -110,11 +106,12 @@ namespace AutoCEMI.GUI.Views
                 };
                 ComboBox mapsComboBox = new ComboBox()
                 {
-                    ItemsSource = new ObservableCollection<string> (gameProfileViewModel.GetMaps()),
+                    ItemsSource = new ObservableCollection<string>(gameProfileViewModel.GetMaps()),
                     Header = "Map",
                     SelectedItem = gameProfileViewModel.ExecutionOptions.Map,
                 };
-                Button resetMapButton = new Button() {
+                Button resetMapButton = new Button()
+                {
                     Content = "Reset map selection"
                 };
                 resetMapButton.Click += (sender, e) => mapsComboBox.SelectedItem = null;
@@ -126,18 +123,19 @@ namespace AutoCEMI.GUI.Views
                     StepFrequency = 1,
                     Value = gameProfileViewModel.ExecutionOptions.Difficulty
                 };
-                
+
                 stackPanel.Children.Add(mapsComboBox);
                 stackPanel.Children.Add(resetMapButton);
                 stackPanel.Children.Add(skillSlider);
 
-                ContentDialog contentDialog = new ContentDialog() {
+                ContentDialog contentDialog = new ContentDialog()
+                {
                     Title = "Edit execution parameters",
                     Content = stackPanel,
                     XamlRoot = XamlRoot,
                     PrimaryButtonText = "Ok"
                 };
-                
+
                 ContentDialogResult result = await contentDialog.ShowAsync();
 
                 gameProfileViewModel.ExecutionOptions.Map = mapsComboBox.SelectedItem as string ?? string.Empty;

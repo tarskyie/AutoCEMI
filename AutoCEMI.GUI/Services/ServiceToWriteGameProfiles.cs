@@ -1,7 +1,6 @@
 ﻿using AutoCEMI.GUI.ViewModels;
 using AutoCEMI.Models;
 using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.IO;

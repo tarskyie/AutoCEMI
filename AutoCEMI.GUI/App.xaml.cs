@@ -1,6 +1,4 @@
 ﻿using Microsoft.UI.Xaml;
-using System;
-using WinRT.Interop;
 
 namespace AutoCEMI.GUI
 {

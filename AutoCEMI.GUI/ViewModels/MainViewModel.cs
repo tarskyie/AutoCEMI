@@ -1,5 +1,4 @@
 ﻿using AutoCEMI.Models;
-using AutoCEMI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -7,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -79,7 +77,7 @@ namespace AutoCEMI.GUI.ViewModels
         public void SwitchToNextTab()
         {
             if (SelectedTab == null) return;
-            int TabIndex = Tabs.IndexOf(SelectedTab) + 1 % Tabs.Count();
+            int TabIndex = (Tabs.IndexOf(SelectedTab) + 1) % Tabs.Count();
             SelectedTab = Tabs[TabIndex];
         }
 
@@ -122,8 +120,9 @@ namespace AutoCEMI.GUI.ViewModels
                     }
                     SelectedTab = Tabs[state.SelectedTabIndex];
                 }
-            } 
-            catch {
+            }
+            catch
+            {
                 if (Tabs.Count == 0)
                 {
                     Tabs.Add(new GameProfileViewModel());
@@ -163,6 +162,6 @@ namespace AutoCEMI.GUI.ViewModels
 
     public class TabState
     {
-        public GameProfile? Profile{ get; set; }
+        public GameProfile? Profile { get; set; }
     }
 }

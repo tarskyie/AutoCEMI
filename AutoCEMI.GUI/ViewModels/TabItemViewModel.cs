@@ -3,9 +3,7 @@ using AutoCEMI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 
 namespace AutoCEMI.GUI.ViewModels
@@ -34,7 +32,7 @@ namespace AutoCEMI.GUI.ViewModels
         private bool _isUndoingOrRedoing;
 
         private GameExecute gameExecute = new();
-        
+
         public List<string> GetMaps()
         {
             if (Profile.Game.Iwad != _previousWadPath)
@@ -50,7 +48,8 @@ namespace AutoCEMI.GUI.ViewModels
             if (_undoStack.Count > 0) return true;
             return false;
         }
-        public bool CanRedo() {
+        public bool CanRedo()
+        {
             if (_redoStack.Count > 0) return true;
             return false;
         }
