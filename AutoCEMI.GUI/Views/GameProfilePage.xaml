@@ -14,10 +14,17 @@
     </UserControl.DataContext>
 
     <ScrollViewer>
-        <StackPanel Padding="16" Spacing="24">
+        <Grid Padding="16" RowSpacing="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
             <!-- Profile Metadata -->
-            <StackPanel Spacing="8">
+            <StackPanel Grid.Row="0" Spacing="8">
                 <TextBlock Text="Profile" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBox Header="Name"
                          Text="{Binding Profile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -27,7 +34,7 @@
             </StackPanel>
 
             <!-- Game Settings -->
-            <StackPanel Spacing="8">
+            <StackPanel Grid.Row="1" Spacing="8">
                 <TextBlock Text="Game" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBox Header="IWAD"
                          Text="{Binding Profile.Game.Iwad, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -38,7 +45,7 @@
             </StackPanel>
 
             <!-- Mods Settings -->
-            <StackPanel Spacing="8">
+            <StackPanel Grid.Row="2" Spacing="8">
                 <TextBlock Text="Mods"
                Style="{StaticResource SubtitleTextBlockStyle}" />
 
@@ -76,7 +83,7 @@
             </StackPanel>
 
             <!-- Video Settings -->
-            <StackPanel Spacing="8" Visibility="Collapsed">
+            <StackPanel Grid.Row="3" Spacing="8" Visibility="Collapsed">
                 <TextBlock Text="Video" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <TextBox Header="Renderer"
                          Text="{Binding Profile.PortSettings.Video.Renderer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -91,7 +98,7 @@
             </StackPanel>
 
             <!-- Audio Settings -->
-            <StackPanel Spacing="8" Visibility="Collapsed">
+            <StackPanel Grid.Row="4" Spacing="8" Visibility="Collapsed">
                 <TextBlock Text="Audio" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <NumberBox Header="Sample Rate"
                            Value="{Binding Profile.PortSettings.Audio.SampleRate, Mode=TwoWay}"
@@ -102,7 +109,7 @@
             </StackPanel>
 
             <!-- Gameplay Flags -->
-            <StackPanel Spacing="8" Visibility="Collapsed">
+            <StackPanel Grid.Row="5" Spacing="8" Visibility="Collapsed">
                 <TextBlock Text="Gameplay Flags" Style="{StaticResource SubtitleTextBlockStyle}" />
                 <ItemsControl x:Name="GameplayFlagsList"
                               ItemsSource="{Binding Profile.PortSettings.GameplayFlags}">
@@ -114,7 +121,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
-
-        </StackPanel>
+        </Grid>
     </ScrollViewer>
 </UserControl>

@@ -35,10 +35,16 @@
             <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="vm:GameProfileViewModel">
                     <TabViewItem Header="{Binding Profile.Name, Mode=OneWay}">
-                        <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            
                             <MenuBar x:Name="MainMenu"
-                                     Loaded="MainMenu_Loaded">
-                                <MenuBarItem Title="File" AccessKey="N">
+                                     Loaded="MainMenu_Loaded"
+                                     Grid.Row="0">
+                                <MenuBarItem Title="File" AccessKey="F">
                                     <MenuFlyoutItem Text="New"
                                                     Click="New_MenuFlyoutItem_Click"
                                                     AccessKey="N">
@@ -110,8 +116,8 @@
                                 </MenuBarItem>
                             </MenuBar>
 
-                            <local:GameProfilePage DataContext="{x:Bind}" />
-                        </StackPanel>
+                            <local:GameProfilePage DataContext="{x:Bind}" Grid.Row="1" />
+                        </Grid>
                     </TabViewItem>
                 </DataTemplate>
             </TabView.TabItemTemplate>
