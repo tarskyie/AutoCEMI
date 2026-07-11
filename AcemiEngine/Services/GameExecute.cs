@@ -18,7 +18,7 @@ namespace AutoCEMI.Services
                 var mod = dataService.mods.FirstOrDefault(m => m.Name == gameProfile.Mods.LoadOrder[i]);
                 if (mod != null)
                 {
-                    engineArgs.Add($"-file {mod.Path}");
+                    engineArgs.Add($"-file \"{mod.Path}\"");
                 }
             }
 
