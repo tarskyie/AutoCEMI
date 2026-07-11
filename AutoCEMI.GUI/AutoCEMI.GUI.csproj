@@ -89,5 +89,6 @@
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">False</PublishTrimmed>
     <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 </Project>
